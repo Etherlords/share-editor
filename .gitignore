@@ -3,6 +3,8 @@ bin/
 bin-debug/
 bin-release/
 
+air/
+
 # Other files and folders
 .settings/
 
