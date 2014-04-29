@@ -3,34 +3,29 @@ package ui
 	import core.datavalue.model.LazyProxy;
 	import core.datavalue.model.ObjectProxy;
 	import core.fileSystem.FsFile;
-	import core.fileSystem.IFS;
-	import flash.display.Stage;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import ui.contextMenu.ContextItem;
+	import ui.contextMenu.ContextMenu;
+	import ui.contextMenu.ContextMenuModel;
+	import ui.contextMenu.events.ContextMenuEvent;
 	import ui.events.FloderEvent;
 	import ui.floderViewer.IconsFactory;
 	import ui.style.Style;
-	import ui.style.StylesCollector;
 	import ui.tree.Tree;
+
 	
 	public class ComponentsSceneView extends UIComponent
 	{
-		[Inject]
-		public var vfs:IFS;
-		
-		[Inject]
-		public var styles:StylesCollector;
-		
-		[Inject]
-		public var __stage:Stage;
-		
-		private var dataModel:ObjectProxy = new LazyProxy(100);
+		private var dataModel:ObjectProxy;
 		
 		private var flodersTree:Tree;
 		private var filePreview:FilePreviewer;
+		private var contextMenu:ContextMenu;
 			
-		public function ComponentsSceneView() 
+		public function ComponentsSceneView(dataModel:LazyProxy) 
 		{
-			inject(this);
+			this.dataModel = dataModel;
 			super();
 		}
 		
@@ -51,6 +46,7 @@ package ui
 				vfs.directoriesList.addItem(field, file);
 			}
 			
+			contextMenu = new ContextMenu();
 			filePreview = new FilePreviewer(dataModel);
 			
 			vfs.directoriesList.index = 0;
@@ -64,7 +60,28 @@ package ui
 		
 		private function onContextOpen(e:FloderEvent):void 
 		{
-			trace(e);
+			
+			addComponent(contextMenu);
+			
+			var menuModel:ContextMenuModel = new ContextMenuModel();
+			
+			if (e.selected.isDerictory)
+			{
+				var createTypeMenu:ContextMenuModel = new ContextMenuModel();
+				createTypeMenu.addItem(new ContextItem("New style file...", "newStyle"));
+				createTypeMenu.addItem(new ContextItem("New png file...", "newPng"));
+				createTypeMenu.addItem(new ContextItem("New jpg file...", "newJpg"));
+				menuModel.addItem(new ContextItem("Create...", '', createTypeMenu));
+			}
+			else
+			{
+				menuModel.addItem(new ContextItem("Delete", "delete"));
+			}
+			
+			contextMenu.show(menuModel);
+			
+			contextMenu.x = stage.mouseX;
+			contextMenu.y = stage.mouseY;
 		}
 		
 		private function onSelect(e:FloderEvent):void 
@@ -87,14 +104,31 @@ package ui
 		{
 			super.initialize();
 			
-			__stage.addEventListener(Event.RESIZE, onResize);
+			contextMenu.addEventListener(ContextMenuEvent.SELECT_ITEM, onContextMenuSelect);
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+		}
+		
+		private function onContextMenuSelect(e:ContextMenuEvent):void 
+		{
+			if (contextMenu.parent)
+				removeComponent(contextMenu);
+				
+			trace(e.selectedItem)
 		}
 		
 		private function onAddedToStage(e:Event):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			stage.addEventListener(Event.RESIZE, onResize);
+			stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+			
 			onResize();
+		}
+		
+		private function onMouseDown(e:MouseEvent):void 
+		{
+			if (!contextMenu.hitTestPoint(e.stageX, e.stageY, true) && contextMenu.parent)
+				removeComponent(contextMenu);
 		}
 		
 		private function onResize(e:Event = null):void 

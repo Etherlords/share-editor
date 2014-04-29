@@ -1,10 +1,10 @@
 package ui 
 {
+	import core.datavalue.model.LazyProxy;
 	import core.fileSystem.Directory;
 	import core.fileSystem.FsFile;
 	import core.fileSystem.IFile;
 	import core.fileSystem.IFS;
-	import core.fileSystem.LocalFileSystem;
 	import core.fileSystem.VirtualDirectoryScaner;
 	import flash.events.MouseEvent;
 	import flash.filesystem.File;
@@ -20,29 +20,26 @@ package ui
 		[Inject]
 		public var vfs:IFS;
 		
-		
-		
+		[Inject]
+		public var componentsSceneModel:LazyProxy;
 		
 		public function ComponentsScene() 
 		{
 			super();
-			
-			
 		}
 		
 		override public function initialize():void 
 		{
 			super.initialize();
 			
-			inject(this);
+			componentsView = new ComponentsSceneView(componentsSceneModel);
 			
-			componentsView = new ComponentsSceneView();
 			sceneView = componentsView;
 			
 			//componentsView.explorer.saveButton.addEventListener(MouseEvent.MOUSE_DOWN, onSave);
 		}
 		
-		private function onSave(e:MouseEvent):void 
+		/*private function onSave(e:MouseEvent):void 
 		{
 			var virtual:VirtualDirectoryScaner = new VirtualDirectoryScaner();
 			
@@ -101,7 +98,7 @@ package ui
 			
 			
 		}
-		
+		*/
 	}
 
 }

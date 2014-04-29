@@ -27,12 +27,6 @@ package ui.tree
 		[Inject]
 		public var iconFactory:IconsFactory;
 		
-		[Inject]
-		public var styles:StylesCollector;
-		
-		[Inject]
-		public var vfs:IFS;
-		
 		private var _selected:Boolean;
 		
 		public function TreeElement(style:Style=null, item:IFile = null, size:Number = 16) 

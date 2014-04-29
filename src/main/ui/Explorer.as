@@ -1,22 +1,14 @@
 package ui 
 {
 	import core.datavalue.model.ObjectProxy;
-	import core.fileSystem.IFS;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	import flash.text.TextFieldType;
 	import ui.floderViewer.FloderViewer;
 	import ui.style.Style;
-	import ui.style.StylesCollector;
 	
 	public class Explorer extends UIComponent 
 	{
-		[Inject]
-		public var vfs:IFS;
-		
-		[Inject]
-		public var styles:StylesCollector;
-		
 		private var flodersView:FloderViewer;
 		private var background:ScaleBitmap;
 		private var text:Text;
@@ -28,7 +20,6 @@ package ui
 		{
 			this.dataModel = dataModel;
 			
-			inject(this);
 			super(style);
 		}
 		

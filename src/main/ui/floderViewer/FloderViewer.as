@@ -4,8 +4,6 @@ package ui.floderViewer
 	import core.fileSystem.Directory;
 	import core.fileSystem.FsFile;
 	import core.fileSystem.IFile;
-	import core.fileSystem.IFS;
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.ui.Keyboard;
@@ -18,9 +16,6 @@ package ui.floderViewer
 	{
 		[Inject]
 		public var iconFactory:IconsFactory;
-		
-		[Inject]
-		public var vfs:IFS;
 		
 		private var path:String;
 		

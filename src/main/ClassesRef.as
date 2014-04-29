@@ -1,6 +1,7 @@
 package  
 {
 	import core.codec.FileDecoderFactory;
+	import core.datavalue.model.LazyProxy;
 	import core.external.io.DesktopFileLoader;
 	import core.fileSystem.DirectoryScaner;
 	import core.fileSystem.LocalFileSystem;
@@ -14,8 +15,10 @@ package
 	import ui.ComponentsScene;
 	import ui.CompSceneController;
 
-	public class ComponentsClassesRef 
+	public class ClassesRef 
 	{
+		
+		public static var lazyProxy:LazyProxy;
 		
 		public static var displayManager:DisplayManager;
 		public static var pathMathematic:PathMathematic;

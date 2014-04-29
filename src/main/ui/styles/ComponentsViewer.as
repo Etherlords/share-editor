@@ -7,13 +7,11 @@ package ui.styles
 	import ui.CheckBox;
 	import ui.CheckBoxWithLabel;
 	import ui.LineDrawer;
-	import ui.LinePath;
 	import ui.Progress;
 	import ui.ProgressFilled;
 	import ui.ScrollBar;
 	import ui.Slider;
 	import ui.style.Style;
-	import ui.style.StylesCollector;
 	import ui.Text;
 	import ui.TextWidthBackground;
 	import ui.UIComponent;
@@ -30,9 +28,6 @@ package ui.styles
 		private var currentComponent:UIComponent;
 		private var dataModel:ObjectProxy;
 		
-		[Inject]
-		public var styles:StylesCollector;
-		
 		private var moderator:Moderator;
 		
 		public function ComponentsViewer(width:Number, height:Number, dataModel:ObjectProxy) 
@@ -41,7 +36,6 @@ package ui.styles
 			moderator = new Moderator(this, dataModel);
 			moderator.bind(previewComponent, "openFile");
 			
-			inject(this);
 			this.width = width;
 			this.height = height;
 			

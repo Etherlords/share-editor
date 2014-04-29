@@ -14,7 +14,7 @@ package ui
 		
 		public function CompSceneController() 
 		{
-			inject(this);
+			
 		}
 		
 		public function initialize():void 

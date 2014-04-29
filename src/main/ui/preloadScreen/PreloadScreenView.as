@@ -2,19 +2,14 @@ package ui.preloadScreen
 {
 	import flash.events.Event;
 	import ui.Progress;
-	import ui.style.StylesCollector;
 	import ui.UIContainer;
 	
 	public class PreloadScreenView extends UIContainer 
 	{
 		private var progressBar:Progress;
 		
-		[Inject]
-		public var styleCollector:StylesCollector;
-		
 		public function PreloadScreenView() 
 		{
-			inject(this);
 			super();
 		}
 		
@@ -41,7 +36,7 @@ package ui.preloadScreen
 		{
 			super.createChildren();
 			
-			progressBar = new Progress(styleCollector.getStyle("preloadProgress"));
+			progressBar = new Progress(styles.getStyle("preloadProgress"));
 		}
 		
 		override protected function updateDisplayList():void 

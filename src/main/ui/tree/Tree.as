@@ -20,20 +20,12 @@ package ui.tree
 		
 		private var selectedItem:TreeElement;
 		
-		[Inject]
-		public var styles:StylesCollector;
-		
-		[Inject]
-		public var vfs:IFS;
-		
 		public function Tree(style:Style=null, directory:Directory = null, width:Number = 200, height:Number = 500) 
 		{
 			_height = height;
 			_width = width;
 			
 			this.directory = directory;
-			
-			inject(this);
 			super(style);
 		}
 		

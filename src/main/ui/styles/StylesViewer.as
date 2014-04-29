@@ -1,24 +1,16 @@
 package ui.styles 
 {
-	import core.fileSystem.IFS;
 	import flash.display.BitmapData;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import ui.ImageViewer;
 	import ui.style.Style;
-	import ui.style.StylesCollector;
 	import ui.Text;
 	import ui.TextWidthBackground;
 	import ui.UIComponent;
 	
 	public class StylesViewer extends UIComponent 
 	{
-		[Inject]
-		public var vfs:IFS;
-		
-		[Inject]
-		public var styles:StylesCollector;
-		
 		private var uiElements:Vector.<UIComponent> = new Vector.<UIComponent>;
 		private var background:ScaleBitmap;
 		
@@ -26,7 +18,6 @@ package ui.styles
 		
 		public function StylesViewer(style:Style=null) 
 		{
-			inject(this);
 			super(style);
 		}
 		

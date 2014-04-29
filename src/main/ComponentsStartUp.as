@@ -9,7 +9,7 @@ package
 	
 	public class ComponentsStartUp extends Sprite 
 	{
-		private static const classRef:ComponentsClassesRef = new ComponentsClassesRef();
+		private static const classRef:ClassesRef = new ClassesRef();
 		
 		public function ComponentsStartUp() 
 		{
@@ -46,7 +46,7 @@ package
 			
 			addToContext(defaultVfs);
 			addToContext(stage);
-			addToContext(new StylesCollector());
+			addToContext(StylesCollector.instance);
 			
 			trace("classRef");
 			
