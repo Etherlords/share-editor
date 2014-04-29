@@ -1,6 +1,6 @@
 package ui 
 {
-	import core.datavalue.model.LazyProxy;
+	impui.contextMenuort core.datavalue.model.LazyProxy;
 	import core.datavalue.model.ObjectProxy;
 	import core.fileSystem.FsFile;
 	import flash.events.Event;
@@ -8,7 +8,7 @@ package ui
 	import ui.contextMenu.ContextItem;
 	import ui.contextMenu.ContextMenu;
 	import ui.contextMenu.ContextMenuModel;
-	import ui.contextMenu.events.ContextMenuEvent;
+	import ui.contextMenu.ContextMenuEvent;
 	import ui.events.FloderEvent;
 	import ui.floderViewer.IconsFactory;
 	import ui.style.Style;
