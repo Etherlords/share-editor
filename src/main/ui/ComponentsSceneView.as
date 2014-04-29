@@ -1,14 +1,12 @@
 package ui 
 {
-	impui.contextMenuort core.datavalue.model.LazyProxy;
+	import core.datavalue.model.LazyProxy;
 	import core.datavalue.model.ObjectProxy;
 	import core.fileSystem.FsFile;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import ui.contextMenu.ContextItem;
 	import ui.contextMenu.ContextMenu;
-	import ui.contextMenu.ContextMenuModel;
-	import ui.contextMenu.ContextMenuEvent;
+	import ui.contextMenu.events.ContextMenuEvent;
 	import ui.events.FloderEvent;
 	import ui.floderViewer.IconsFactory;
 	import ui.style.Style;
@@ -62,23 +60,6 @@ package ui
 		{
 			
 			addComponent(contextMenu);
-			
-			var menuModel:ContextMenuModel = new ContextMenuModel();
-			
-			if (e.selected.isDerictory)
-			{
-				var createTypeMenu:ContextMenuModel = new ContextMenuModel();
-				createTypeMenu.addItem(new ContextItem("New style file...", "newStyle"));
-				createTypeMenu.addItem(new ContextItem("New png file...", "newPng"));
-				createTypeMenu.addItem(new ContextItem("New jpg file...", "newJpg"));
-				menuModel.addItem(new ContextItem("Create...", '', createTypeMenu));
-			}
-			else
-			{
-				menuModel.addItem(new ContextItem("Delete", "delete"));
-			}
-			
-			contextMenu.show(menuModel);
 			
 			contextMenu.x = stage.mouseX;
 			contextMenu.y = stage.mouseY;

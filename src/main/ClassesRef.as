@@ -9,14 +9,19 @@ package
 	import core.services.FileDecodeService;
 	import core.services.FileLoadingService;
 	import display.ui.DisplayManager;
-	import ui.preloadScreen.PreloaderScene;
-	
 	import geom.PathMathematic;
 	import ui.ComponentsScene;
 	import ui.CompSceneController;
+	import ui.contextMenu.DirectoryContextMenu;
+	import ui.contextMenu.FileContextMenu;
+	import ui.preloadScreen.PreloaderScene;
+	
 
 	public class ClassesRef 
 	{
+		
+		public static var directoryContextMenu:DirectoryContextMenu;
+		public static var fileContextMenu:FileContextMenu;
 		
 		public static var lazyProxy:LazyProxy;
 		
