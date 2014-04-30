@@ -2,11 +2,14 @@ package ui
 {
 	import core.datavalue.model.LazyProxy;
 	import core.datavalue.model.ObjectProxy;
+	import core.fileSystem.Directory;
 	import core.fileSystem.FsFile;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import ui.contextMenu.ContextMenu;
+	import ui.contextMenu.DirectoryContextMenu;
 	import ui.contextMenu.events.ContextMenuEvent;
+	import ui.contextMenu.FileContextMenu;
 	import ui.events.FloderEvent;
 	import ui.floderViewer.IconsFactory;
 	import ui.style.Style;
@@ -33,6 +36,12 @@ package ui
 			
 			addToContext(new IconsFactory());
 			
+			vfs.directoriesList.index = 0;
+			
+			var styleDir:Directory = new Directory();
+			styleDir.name = 'style';
+			styleDir.parent = vfs.directoriesList.currentItem;
+			
 			for (var field:String in styles.styles.map)
 			{
 				var style:Style = styles.styles.map[field]
@@ -41,23 +50,35 @@ package ui
 				file.content = style;
 				file.path = '/';
 				file.extension = 'style';
-				vfs.directoriesList.addItem(field, file);
+				styleDir.addItem(field, file);
 			}
 			
+			vfs.directoriesList.currentItem.addItem("styles", styleDir);
+			
 			contextMenu = new ContextMenu();
+			contextMenu.addScope("FileSystemContextMenu");
+			
 			filePreview = new FilePreviewer(dataModel);
 			
 			vfs.directoriesList.index = 0;
 			
-			flodersTree = new Tree(null, vfs.directoriesList, 400, 551);
+			flodersTree = new Tree(null, vfs.directoriesList.currentItem as Directory, 400, 551);
 			
 			flodersTree.addEventListener(FloderEvent.OPEN, onOpen);
 			flodersTree.addEventListener(FloderEvent.SELECT, onSelect);
 			flodersTree.addEventListener(FloderEvent.CONTEXT_MENU, onContextOpen);
 		}
 		
+		private var directoryMenu:DirectoryContextMenu = new DirectoryContextMenu();
+		private var fileContextMenu:FileContextMenu = new FileContextMenu();
+		
 		private function onContextOpen(e:FloderEvent):void 
 		{
+			
+			if (e.selected.isDerictory)
+				contextMenu.show(directoryMenu, e.selected);
+			else
+				contextMenu.show(fileContextMenu, e.selected);
 			
 			addComponent(contextMenu);
 			

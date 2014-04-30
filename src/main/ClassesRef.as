@@ -10,10 +10,12 @@ package
 	import core.services.FileLoadingService;
 	import display.ui.DisplayManager;
 	import geom.PathMathematic;
+	import services.FileSystemService;
 	import ui.ComponentsScene;
 	import ui.CompSceneController;
 	import ui.contextMenu.DirectoryContextMenu;
 	import ui.contextMenu.FileContextMenu;
+	import ui.FilesActionsController;
 	import ui.preloadScreen.PreloaderScene;
 	
 
@@ -43,6 +45,8 @@ package
 		public static var virtdirscan:VirtualDirectoryScaner;
 		public static var dir:DirectoryScaner;
 		
+		public static var fileSystemService:FileSystemService;
+		public static var fileActonController:FilesActionsController;
 	}
 
 }

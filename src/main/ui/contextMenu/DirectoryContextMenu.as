@@ -15,9 +15,9 @@ package ui.contextMenu
 		{
 			
 			var createTypeMenu:ContextMenuModel = new ContextMenuModel();
-			createTypeMenu.addItem(new ContextItem("New style file...", "newStyle"));
-			createTypeMenu.addItem(new ContextItem("New png file...", "newPng"));
-			createTypeMenu.addItem(new ContextItem("New jpg file...", "newJpg"));
+			createTypeMenu.addItem(new ContextItem("New style file...", "style"));
+			createTypeMenu.addItem(new ContextItem("New png file...", "png"));
+			createTypeMenu.addItem(new ContextItem("New jpg file...", "jpg"));
 			addItem(new ContextItem("Create...", '', createTypeMenu));
 		}
 		
