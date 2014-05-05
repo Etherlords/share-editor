@@ -21,7 +21,7 @@ package ui
 			
 		}
 		
-		public function invorkFileContextMenuCommand(e:ContextMenuEvent):void 
+		public function invocFileContextMenuCommand(e:ContextMenuEvent):void 
 		{
 			trace(e);
 			var ident:String = e.selectedItem.ident;
