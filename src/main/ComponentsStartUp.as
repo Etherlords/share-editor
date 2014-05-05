@@ -1,8 +1,5 @@
 package  
 {
-	import core.fileSystem.Directory;
-	import core.fileSystem.FsFile;
-	import core.fileSystem.LocalFileSystem;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import ui.style.StylesCollector;
@@ -10,6 +7,7 @@ package
 	public class ComponentsStartUp extends Sprite 
 	{
 		private static const classRef:ClassesRef = new ClassesRef();
+		private var defaultLoading:DefaultLoading;
 		
 		public function ComponentsStartUp() 
 		{
@@ -28,30 +26,24 @@ package
 			stage.align = 'TL';
 			stage.scaleMode = 'noScale';
 			
-			var defaultVfs:LocalFileSystem = new LocalFileSystem();
-			var defaultDir:Directory = new Directory();
+			var defaultUI:DefaultUIManager = new DefaultUIManager();
+			defaultUI.addEventListener(Event.COMPLETE, onDefaultUIReady);
 			
-			defaultVfs.directoriesList = defaultDir;
+			defaultLoading = new DefaultLoading();
 			
-			defaultDir.name = '/';
-			defaultDir.path = '/'
+			addChild(defaultLoading);
 			
-			var progress:FsFile = new FsFile();
-			progress.content = new DefaultUI.progressProgress().bitmapData;
-			var background:FsFile = new FsFile();
-			background.content = new DefaultUI.progressBackground().bitmapData;;
-			
-			defaultDir.addItem('progress', progress);
-			defaultDir.addItem('background', background);
-			
-			addToContext(defaultVfs);
 			addToContext(stage);
+		}
+		
+		private function onDefaultUIReady(e:Event):void 
+		{
+			removeChild(defaultLoading);
+			
 			addToContext(StylesCollector.instance);
 			
-			trace("classRef");
-			
 			var XMLBootsTrap:XMLBootstrap = new XMLBootstrap();
-			XMLBootsTrap.loadConfig('./config/componentsMain.xml');
+			XMLBootsTrap.loadConfig('./config/main.xml');
 		}
 		
 	}

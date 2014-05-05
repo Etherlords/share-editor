@@ -1,16 +1,7 @@
 package ui 
 {
 	import core.datavalue.model.LazyProxy;
-	import core.fileSystem.Directory;
-	import core.fileSystem.FsFile;
-	import core.fileSystem.IFile;
 	import core.fileSystem.IFS;
-	import core.fileSystem.VirtualDirectoryScaner;
-	import flash.events.MouseEvent;
-	import flash.filesystem.File;
-	import flash.filesystem.FileMode;
-	import flash.filesystem.FileStream;
-	import flash.utils.ByteArray;
 	import ui.scenes.AbstractScene;
 	
 	public class ComponentsScene extends AbstractScene 

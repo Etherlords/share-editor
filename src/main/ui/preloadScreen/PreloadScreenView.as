@@ -13,6 +13,11 @@ package ui.preloadScreen
 			super();
 		}
 		
+		public function get progress():Number
+		{
+			return progressBar.progress;
+		}
+		
 		public function set progress(value:Number):void
 		{
 			progressBar.progress = value;
