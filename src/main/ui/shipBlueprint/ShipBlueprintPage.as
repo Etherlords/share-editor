@@ -7,15 +7,19 @@ package ui.shipBlueprint
 	import away3d.primitives.CubeGeometry;
 	import characters.Actor;
 	import characters.view.ViewController;
+	import core.datavalue.model.Moderator;
+	import core.datavalue.model.ObjectProxy;
 	import core.fileSystem.FsFile;
 	import display.SceneController;
 	import flash.display3D.Context3DProfile;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.geom.Vector3D;
 	import ui.LineDrawer;
 	import ui.style.Style;
-	import ui.UIComponent;
+	import ui.UIComponetBroadcaster;
 	
-	public class ShipBlueprintPage extends UIComponent 
+	public class ShipBlueprintPage extends UIComponetBroadcaster
 	{
 		public var content:FsFile;
 		
@@ -25,24 +29,56 @@ package ui.shipBlueprint
 		private var shipView:ViewController;
 		private var shipModelControlPanel:ShipViewControlPanel;
 		private var lineDrawer:LineDrawer;
+		private var moderator:Moderator;
+		private var meshContainer:ObjectContainer3D;
+		
+		[Inject(id="filesDataModel")]
+		public var filesDataModel:ObjectProxy
 		
 		public function ShipBlueprintPage(style:Style=null) 
 		{
+			inject(this);
+			
+			moderator = new Moderator(this, filesDataModel);
+			moderator.bind(onFileChange, "openFile");
+			
 			super(style);
 			
-			initialize();
+			addScope('filePrompt');
 		}
 		
-		private function initialize():void 
+		private function onFileChange():void 
 		{
-			var obj:ObjectContainer3D = new ObjectContainer3D();
+			if (!(filesDataModel.openFile.content is ObjectContainer3D))
+				return;
+				
+			var obj:ObjectContainer3D = filesDataModel.openFile.content;
 			
-			obj.addChild(new Mesh(new CubeGeometry(), DefaultMaterialManager.getDefaultMaterial()));
-			shipView = new ViewController(obj);
+			
+				
+			meshContainer.removeChildAt(0);
+			meshContainer.addChild(filesDataModel.openFile.content);
+		}
+		
+		override protected function initialize():void 
+		{
+			meshContainer = new ObjectContainer3D();
+			
+			meshContainer.addChild(new Mesh(new CubeGeometry(), DefaultMaterialManager.getDefaultMaterial()));
+			shipView = new ViewController(meshContainer);
 			
 			var actor:Actor = new Actor(shipView);
 			
 			displayController.addDisplayObject(actor);
+			
+			shipModelControlPanel.selectModel.addEventListener(MouseEvent.CLICK, showFilePromt);
+			
+			addEventListener(MouseEvent.MOUSE_WHEEL, onWheel);
+		}
+		
+		private function onWheel(e:MouseEvent):void 
+		{
+			meshContainer.scaleX = meshContainer.scaleY = meshContainer.scaleZ += e.delta;
 		}
 		
 		private function createViewport():void
@@ -83,6 +119,16 @@ package ui.shipBlueprint
 			lineDrawer = new LineDrawer(styles.getStyle("mainMenu"), null, true);
 		}
 		
+		private function showFilePromt(e:MouseEvent):void 
+		{
+			broadcast(new Event("show"))
+		}
+		
+		private function onModelSelected(e:Event):void 
+		{
+			
+		}
+		
 		override protected function configureChildren():void 
 		{
 			super.configureChildren();
@@ -118,6 +164,19 @@ package ui.shipBlueprint
 			displayController.update();
 			
 			shipView.displayObject.rotationX++;
+			
+			var position:Vector3D = new Vector3D(shipView.displayObject.x, shipView.displayObject.y, shipView.displayObject.z);
+			position = view3d.project(position);
+			
+			trace(meshContainer.minX, meshContainer.maxX, meshContainer.minY, meshContainer.maxY);
+			
+			this.graphics.clear();
+			this.graphics.lineStyle(1, 0xFFFFFF);
+			this.graphics.drawRect(
+								view3d.x + meshContainer.minX * meshContainer.scaleX / 2 + position.x,
+								view3d.y + meshContainer.minY * meshContainer.scaleY / 2 + position.y,
+								meshContainer.maxX * meshContainer.scaleX,
+								meshContainer.maxY * meshContainer.scaleY);
 		}
 		
 		public function show(content:FsFile):void

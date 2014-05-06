@@ -1,6 +1,7 @@
 package ui 
 {
 	import core.datavalue.model.ObjectProxy;
+	import core.fileSystem.FsFile;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	import flash.text.TextFieldType;
@@ -14,7 +15,8 @@ package ui
 		private var text:Text;
 		private var findText:Text;
 		private var dataModel:ObjectProxy;
-		public var saveButton:Button;
+		
+		public var currentFile:FsFile;
 		
 		public function Explorer(style:Style=null, dataModel:ObjectProxy = null) 
 		{
@@ -35,11 +37,14 @@ package ui
 			dataModel.openFile = flodersView.currentFile;
 			//if(flodersView.currentFile.content is Style)
 			//	styleViewer.showStyle(flodersView.currentFile.content);
+			
+			currentFile = flodersView.currentFile;
+			dispatchEvent(e);
 		}
 		
 		private function onChange(e:Event):void 
 		{
-			dataModel.selectedFile = flodersView.currentFile;
+			//dataModel.selectedFile = flodersView.currentFile;
 			
 			layoutChildren();
 			text.text = flodersView.directory.path;
@@ -61,7 +66,6 @@ package ui
 			findText = new TextWidthBackground(styles.getStyle('componentsSceneText'));
 			background = new ScaleBitmap(vfs.getFile("res/textures/ui/frame.png").content);
 			flodersView = new FloderViewer(null, vfs.directoriesList, 'res/');
-			saveButton = new Button(styles.getStyle("mainMenuButton"), "Save")
 		}
 		
 		override protected function updateDisplayList():void 
@@ -72,7 +76,6 @@ package ui
 			addComponent(flodersView);
 			addComponent(text);
 			addComponent(findText);
-			addComponent(saveButton);
 		}
 		
 		override public function update():void 
@@ -109,9 +112,6 @@ package ui
 			text.width = flodersView.width + 2 - 100;
 			findText.width = 100;
 			findText.x = text.x + text.width
-			
-			saveButton.x = background.width - saveButton.width;
-			saveButton.y = background.y + background.height +2;
 		}
 		
 	}

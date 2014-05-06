@@ -11,21 +11,26 @@ package ui
 	import ui.contextMenu.events.ContextMenuEvent;
 	import ui.contextMenu.FileContextMenu;
 	import ui.events.FloderEvent;
+	import ui.floderViewer.FloderViewer;
 	import ui.floderViewer.IconsFactory;
 	import ui.style.Style;
 	import ui.tree.Tree;
 
 	
-	public class ComponentsSceneView extends UIComponent
+	public class ComponentsSceneView extends UIComponetBroadcaster
 	{
 		private var dataModel:ObjectProxy;
 		
 		private var flodersTree:Tree;
 		private var filePreview:FilePreviewer;
 		private var contextMenu:ContextMenu;
+		private var filePromt:Explorer;
+		
+		public var filesDataModel:ObjectProxy;
 			
-		public function ComponentsSceneView(dataModel:LazyProxy) 
+		public function ComponentsSceneView(dataModel:LazyProxy, filesDataModel:ObjectProxy) 
 		{
+			this.filesDataModel = filesDataModel;
 			this.dataModel = dataModel;
 			super();
 		}
@@ -34,7 +39,8 @@ package ui
 		{
 			super.createChildren();
 			
-			addToContext(new IconsFactory());
+			filePromt = new Explorer(null, filesDataModel);
+			filePromt.addEventListener(Event.OPEN, onFileSelected);
 			
 			vfs.directoriesList.index = 0;
 			
@@ -108,14 +114,29 @@ package ui
 			
 			contextMenu.addEventListener(ContextMenuEvent.SELECT_ITEM, onContextMenuSelect);
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			
+			describe("filePrompt", "show", onShowFilePromt);
+		}
+		
+		private function onFileSelected(e:Event):void 
+		{
+			filesDataModel.update();
+			removeComponent(filePromt);
+		}
+		
+		private function onShowFilePromt(e:Event):void 
+		{
+			//filePromt.directory = vfs.directoriesList;
+			//filePromt.setView();
+			
+			if(!filePromt.parent)
+				addComponent(filePromt);
 		}
 		
 		private function onContextMenuSelect(e:ContextMenuEvent):void 
 		{
 			if (contextMenu.parent)
 				removeComponent(contextMenu);
-				
-			trace(e.selectedItem)
 		}
 		
 		private function onAddedToStage(e:Event):void 

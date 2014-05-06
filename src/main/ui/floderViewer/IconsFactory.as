@@ -12,7 +12,7 @@ package ui.floderViewer
 		
 		public function IconsFactory() 
 		{
-			inject(this);
+			
 		}
 		
 		public function getIcon(file:*):BitmapData

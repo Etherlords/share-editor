@@ -1,6 +1,7 @@
 package ui 
 {
 	import core.datavalue.model.LazyProxy;
+	import core.datavalue.model.ObjectProxy;
 	import core.fileSystem.IFS;
 	import ui.scenes.AbstractScene;
 	
@@ -14,6 +15,8 @@ package ui
 		[Inject]
 		public var componentsSceneModel:LazyProxy;
 		
+		private var filesDataModel:ObjectProxy = new ObjectProxy;
+		
 		public function ComponentsScene() 
 		{
 			super();
@@ -23,10 +26,12 @@ package ui
 		{
 			super.initialize();
 			
-			componentsView = new ComponentsSceneView(componentsSceneModel);
+			addToContext(filesDataModel, 'filesDataModel');
+			
+			componentsView = new ComponentsSceneView(componentsSceneModel, filesDataModel);
 			
 			sceneView = componentsView;
-			
+				
 			//componentsView.explorer.saveButton.addEventListener(MouseEvent.MOUSE_DOWN, onSave);
 		}
 		

@@ -7,8 +7,8 @@ package ui.shipBlueprint
 	
 	public class ShipViewControlPanel extends UIComponent 
 	{
-		private var selectModel:Button;
-		private var clearAll:Button;
+		public var selectModel:Button;
+		public var clearAll:Button;
 		private var background:ScaleBitmap;
 		
 		public function ShipViewControlPanel(style:Style=null) 

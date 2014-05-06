@@ -103,7 +103,7 @@ package ui.floderViewer
 			setView();
 		}
 		
-		private function setView():void
+		public function setView():void
 		{
 			var i:int;
 			
