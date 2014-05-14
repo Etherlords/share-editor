@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <application xmlns="http://ns.adobe.com/air/application/4.0">
   <id>Editor</id>
-  <versionNumber>1.0</versionNumber>
+  <versionNumber>1.4</versionNumber>
   <filename>Editor</filename>
   <name>Editor</name>
   <initialWindow>
     <title>Editor</title>
     <content>Editor.swf</content>
-    <systemChrome>standard</systemChrome>
+    <systemChrome>none</systemChrome>
     <transparent>false</transparent>
     <visible>true</visible>
-    <minimizable>true</minimizable>
-    <maximizable>true</maximizable>
-    <resizable>true</resizable>
+    <minimizable>false</minimizable>
+    <maximizable>false</maximizable>
+    <resizable>false</resizable>
     <renderMode>direct</renderMode>
     <depthAndStencil>true</depthAndStencil>
     <x>0</x>
@@ -22,5 +22,7 @@
 	More options:
 	http://livedocs.adobe.com/flex/3/html/File_formats_1.html#1043413
 	-->
-  <supportedProfiles>desktop mobileDevice</supportedProfiles>
+  <supportedProfiles>desktop extendedDesktop mobileDevice</supportedProfiles>
+  <programMenuFolder>Etherlords</programMenuFolder>
+  <installFolder>Etherlords/Editor</installFolder>
 </application>

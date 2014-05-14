@@ -1,7 +1,11 @@
 package  
 {
+	import flash.desktop.NativeApplication;
+	import flash.display.NativeWindow;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.system.Capabilities;
+	import flash.system.System;
 	import ui.style.StylesCollector;
 	
 	public class ComponentsStartUp extends Sprite 
@@ -34,6 +38,9 @@ package
 			addChild(defaultLoading);
 			
 			addToContext(stage);
+			
+			NativeApplication.nativeApplication.openedWindows[0].width = Capabilities.screenResolutionX
+			NativeApplication.nativeApplication.openedWindows[0].height = Capabilities.screenResolutionY
 		}
 		
 		private function onDefaultUIReady(e:Event):void 

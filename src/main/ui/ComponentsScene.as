@@ -13,7 +13,7 @@ package ui
 		public var vfs:IFS;
 		
 		[Inject]
-		public var componentsSceneModel:LazyProxy;
+		public var componentsSceneModel:ObjectProxy;
 		
 		private var filesDataModel:ObjectProxy = new ObjectProxy;
 		
@@ -28,6 +28,7 @@ package ui
 			
 			addToContext(filesDataModel, 'filesDataModel');
 			
+			componentsSceneModel.autoUpdate = true;
 			componentsView = new ComponentsSceneView(componentsSceneModel, filesDataModel);
 			
 			sceneView = componentsView;

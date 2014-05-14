@@ -1,6 +1,5 @@
 package ui 
 {
-	import core.datavalue.model.LazyProxy;
 	import core.datavalue.model.ObjectProxy;
 	import core.fileSystem.Directory;
 	import core.fileSystem.FsFile;
@@ -11,8 +10,6 @@ package ui
 	import ui.contextMenu.events.ContextMenuEvent;
 	import ui.contextMenu.FileContextMenu;
 	import ui.events.FloderEvent;
-	import ui.floderViewer.FloderViewer;
-	import ui.floderViewer.IconsFactory;
 	import ui.style.Style;
 	import ui.tree.Tree;
 
@@ -28,7 +25,7 @@ package ui
 		
 		public var filesDataModel:ObjectProxy;
 			
-		public function ComponentsSceneView(dataModel:LazyProxy, filesDataModel:ObjectProxy) 
+		public function ComponentsSceneView(dataModel:ObjectProxy, filesDataModel:ObjectProxy) 
 		{
 			this.filesDataModel = filesDataModel;
 			this.dataModel = dataModel;
@@ -116,6 +113,12 @@ package ui
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			
 			describe("filePrompt", "show", onShowFilePromt);
+			describe("global", "updateFiles", updateFileTree);
+		}
+		
+		private function updateFileTree(e:Event):void 
+		{
+			flodersTree.rebuild();
 		}
 		
 		private function onFileSelected(e:Event):void 

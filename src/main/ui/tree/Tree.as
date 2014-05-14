@@ -29,6 +29,20 @@ package ui.tree
 			super(style);
 		}
 		
+		public function rebuild():void
+		{
+			floderElement.removeEventListener(Event.CHANGE, onChangeFloders);
+			floderElement.removeEventListener(FloderEvent.OPEN, onOpen);
+			floderElement.removeEventListener(FloderEvent.SELECT, onSelect);
+			
+			floderElement = new FloderElement(null, directory);
+			floderElement.open();
+			
+			scrollContainer.content = floderElement;
+			initialize();
+			layoutChildren();
+		}
+		
 		override protected function createChildren():void 
 		{
 			super.createChildren();

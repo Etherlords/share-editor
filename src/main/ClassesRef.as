@@ -23,6 +23,7 @@ package
 	{
 		
 		public static var resourceManager:ResourceManager;
+		public static var keyboardMap:KeyboardMap;
 		
 		public static var directoryContextMenu:DirectoryContextMenu;
 		public static var fileContextMenu:FileContextMenu;
